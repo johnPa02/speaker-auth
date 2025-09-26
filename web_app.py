@@ -8,6 +8,8 @@ from core import (
     SAMPLE_SENTENCES,
     verification,
 )
+from dotenv import load_dotenv
+load_dotenv()
 
 # ================= Streamlit Config =================
 st.set_page_config(page_title="Speaker Authentication", page_icon="🎤", layout="wide")
