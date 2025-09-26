@@ -1,0 +1,47 @@
+name: Deploy to Amazon EC2
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  PROJECT_NAME: speaker-auth
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /home/ubuntu || exit 1
+          if [ ! -d "speaker-auth/.git" ]; then
+            echo "📥 Cloning repository..."
+            rm -rf speaker-auth
+            git clone https://github.com/johnPa02/speaker-auth.git speaker-auth
+          fi
+
+          cd speaker-auth
+          git fetch origin
+          git checkout main
+          git pull origin main
+
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+          docker compose -f docker-compose.yml down || true
+
+          docker compose -f docker-compose.yml up -d --build
+
+          echo "✅ Deployed successfully to EC2"
