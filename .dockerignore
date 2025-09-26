@@ -1,0 +1,34 @@
+# VCS
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.python-version
+
+# Environments
+.venv
+venv
+
+# Local data / artifacts
+enrolled/
+verify.wav
+temp_verify.wav
+pretrained_models/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Credentials (mount via volumes instead)
+*.json
+.env
+

@@ -1,0 +1,29 @@
+services:
+  app:
+    build: .
+    container_name: speaker-auth-app
+    ports:
+      - "8501:8501"
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-key.json
+      - STREAMLIT_SERVER_PORT=8501
+    volumes:
+      - ./enrolled:/app/enrolled
+      - ./pretrained_models:/app/pretrained_models
+      - ./ivita-440104-fb2b5e47a223.json:/app/gcp-key.json:ro
+    restart: unless-stopped
+
+  api:
+    build: .
+    container_name: speaker-auth-api
+    command: ["uv", "run", "uvicorn", "ws_server:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-key.json
+      - DATA_ROOT=/app/enrolled
+    volumes:
+      - ./enrolled:/app/enrolled
+      - ./pretrained_models:/app/pretrained_models
+      - ./ivita-440104-fb2b5e47a223.json:/app/gcp-key.json:ro
+    restart: unless-stopped
