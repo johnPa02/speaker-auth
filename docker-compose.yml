@@ -4,6 +4,8 @@ services:
     container_name: speaker-auth-app
     ports:
       - "8501:8501"
+    env_file:
+      - .env
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-key.json
       - STREAMLIT_SERVER_PORT=8501
