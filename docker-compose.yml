@@ -10,7 +10,7 @@ services:
     volumes:
       - ./enrolled:/app/enrolled
       - ./pretrained_models:/app/pretrained_models
-      - ./ivita-440104-fb2b5e47a223.json:/app/gcp-key.json:ro
+      - ./gcp-key.json:/app/gcp-key.json:ro
     restart: unless-stopped
 
   api:
@@ -25,5 +25,6 @@ services:
     volumes:
       - ./enrolled:/app/enrolled
       - ./pretrained_models:/app/pretrained_models
-      - ./ivita-440104-fb2b5e47a223.json:/app/gcp-key.json:ro
+      - ./gcp-key.json:/app/gcp-key.json:ro
     restart: unless-stopped
+
