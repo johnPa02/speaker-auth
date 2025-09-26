@@ -39,6 +39,7 @@ jobs:
           git pull origin main
 
           echo "${{ secrets.ENV_FILE }}" > .env
+          echo '${{ secrets.GCP_CREDENTIALS }}' > gcp-key.json
 
           docker compose -f docker-compose.yml down || true
 
