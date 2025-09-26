@@ -18,7 +18,7 @@ services:
     container_name: speaker-auth-api
     command: ["uv", "run", "uvicorn", "ws_server:app", "--host", "0.0.0.0", "--port", "8000"]
     ports:
-      - "8101:8000"
+      - "8500:8000"
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-key.json
       - DATA_ROOT=/app/enrolled
